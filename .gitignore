@@ -1,0 +1,20 @@
+# Node
+node_modules/
+.env
+npm-debug.log
+
+# Logs
+logs
+*.log
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# Build
+frontend/build/
+backend/dist/
