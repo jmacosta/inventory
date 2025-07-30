@@ -18,6 +18,6 @@ app.post('/api/test', (req, res) => {
 
 // 4. Indicar el puerto y arrancar el servidor
 
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en puerto ${PORT}`);
+app.listen(PORT || 5000, '0.0.0.0', () => {
+  console.log(`Servidor escuchando en puerto ${PORT || 5000}`);
 });
