@@ -1,7 +1,11 @@
 // 1. Importar express
 const express = require('express');
-require('dotenv').config();
-const PORT = process.env.PORT;
+const dotenv = require('dotenv');
+const connectDB = require('./config/db.js');
+const PORT = process.env.PORT || 5000;
+
+dotenv.config();
+connectDB();
 
 // 2. Crear la aplicación
 const app = express();
@@ -16,8 +20,12 @@ app.post('/api/test', (req, res) => {
   res.json({ recibido: req.body });
 });
 
+app.get('/', (req, res) => {
+  res.send('API is ok');
+});
+
 // 4. Indicar el puerto y arrancar el servidor
 
-app.listen(PORT || 5000, '0.0.0.0', () => {
-  console.log(`Servidor escuchando en puerto ${PORT || 5000}`);
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
