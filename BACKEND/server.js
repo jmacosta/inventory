@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db.js');
 const PORT = process.env.PORT || 5000;
+const supplierRoutes = require('./routes/supplier.routes');
 
 dotenv.config();
 connectDB();
@@ -23,6 +24,8 @@ app.post('/api/test', (req, res) => {
 app.get('/', (req, res) => {
   res.send('API is ok');
 });
+
+app.use('/api/suppliers', supplierRoutes);
 
 // 4. Indicar el puerto y arrancar el servidor
 
