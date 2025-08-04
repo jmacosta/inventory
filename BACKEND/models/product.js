@@ -1,10 +1,10 @@
 const { Schema, model, Types } = require('mongoose');
 
 const productSchema = new Schema({
-  name: String,
-  price: Number,
-  stock: Number,
-  stockMin: Number,
+  name: { type: String, required: true },
+  price: { type: Number },
+  stock: { type: Number, min: 0 },
+  stockMin: { type: Number, min: 0 },
   supplier: {
     type: Types.ObjectId,
     ref: 'Supplier',

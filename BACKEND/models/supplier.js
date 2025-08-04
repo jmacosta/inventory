@@ -1,14 +1,14 @@
 const { Schema, model } = require('mongoose');
 
 const supplierSchema = new Schema({
-  nif: { String, required: true, unique: true },
+  nif: { type: String, required: true, unique: true },
   name: { type: String, required: true },
-  contac: {
-    email: String,
-    phone: String,
-    mobile: String,
+  contact: {
+    email: { type: String },
+    phone: { type: String },
+    mobile: { type: String },
   },
-  address: String,
+  address: { type: String },
 });
 
 module.exports = model('Supplier', supplierSchema);
