@@ -1,4 +1,5 @@
-const Product = require('../models/Product');
+const { default: mongoose } = require('mongoose');
+const Product = require('../models/product');
 
 // Obtener todos los productos
 const getAllProducts = async (req, res) => {
@@ -13,7 +14,7 @@ const getAllProducts = async (req, res) => {
 // Obtener un producto por ID
 const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate('supplier');
     if (!product) {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
@@ -26,11 +27,22 @@ const getProductById = async (req, res) => {
 // Crear un nuevo producto
 const createProduct = async (req, res) => {
   try {
-    const newProduct = new Product(req.body);
+    const { name, stock, stockMin, supplier } = new Product(req.body);
+    if (!mongoose.Types.ObjectId.isValid(supplier)) {
+      return res.status(400).json({ error: 'Supplier ID is not valid' });
+    }
+
+    const newProduct = new Product({
+      name,
+      stock,
+      stockMin,
+      supplier,
+    });
+
     const saved = await newProduct.save();
     res.status(201).json(saved);
   } catch (error) {
-    res.status(400).json({ message: 'Error al crear producto', error });
+    res.status(400).json({ message: 'Error creating product', error });
   }
 };
 

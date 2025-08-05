@@ -1,4 +1,4 @@
-const Supplier = require('../models/Supplier');
+const Supplier = require('../models/supplier');
 
 // Obtener todos los proveedores
 const getAllSuppliers = async (req, res) => {
@@ -30,7 +30,7 @@ const createSupplier = async (req, res) => {
     const saved = await newSupplier.save();
     res.status(201).json(saved);
   } catch (error) {
-    res.status(400).json({ message: 'Error al crear proveedor', error });
+    res.status(400).json({ message: 'Error creating supplier', error });
   }
 };
 
