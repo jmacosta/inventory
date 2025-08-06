@@ -1,4 +1,5 @@
 const Supplier = require('../models/supplier');
+const { isValidSupplier } = require('../validations/supplier.validation');
 
 // Obtener todos los proveedores
 const getAllSuppliers = async (req, res) => {
@@ -25,6 +26,10 @@ const getSupplierById = async (req, res) => {
 
 // Crear un nuevo proveedor
 const createSupplier = async (req, res) => {
+  const errors = isValidSupplier(req.body);
+  if (errors.length > 0) {
+    return res.status(400).json({ errors });
+  }
   try {
     const newSupplier = new Supplier(req.body);
     const saved = await newSupplier.save();
