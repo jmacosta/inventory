@@ -1,21 +1,22 @@
-const validators = require('../utils/validators');
-const isValidSupplier = data => {
-  const errors = [];
-  if (!validators.isValidName(data.name)) {
-    errors.push('Name is not valid');
+const Joi = require('joi');
+const { name, email, phone, nif, address } = require('./common.validation');
+
+const supplierSchema = Joi.object({
+  name: name.required(),
+  email: email.optional(),
+  phone: phone.optional(),
+  mobile: phone.optional(),
+  nif: nif.required(),
+  address: address.optional(),
+});
+
+const validateSupplier = data => {
+  const { error, value } = supplierSchema.validate(data, { abortEarly: false });
+  if (error) {
+    const errors = error.details.map(detail => detail.message);
+    return { valid: false, errors };
   }
-  if (data.email && !validators.isValidMail(data.email)) {
-    errors.push('Mail is not valid');
-  }
-  if (data.phone && !validators.isValidPhone(data.phone)) {
-    errors.push('Phone is not valid');
-  }
-  if (data.mobile && !validators.isValidPhone(data.mobile)) {
-    errors.push('Mobile is not valid');
-  }
-  if (data.address && !validators.isValidAddress(data.address)) {
-    errors.push('Address is not valid');
-  }
-  return errors;
+  return { valid: true, value };
 };
-module.exports = { isValidSupplier };
+
+module.exports = { validateSupplier };
